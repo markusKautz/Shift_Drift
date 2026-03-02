@@ -7,9 +7,9 @@ node_modules/
 # Package lock (seldom useful for AI reasoning)
 package-lock.json
 
-# Media assets (binary, not meaningful for code understanding)
-img/
-video/
+# Media assets (served from public/)
+public/img/
+public/video/
 
 #supabase TEMP-files
 supabase/.temp

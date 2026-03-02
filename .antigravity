@@ -25,6 +25,7 @@ src/
     utils.js       # Mathematical utility functions
   landing/         # Vue-based technical showcase landing page
   styles/          # Modular CSS architecture
+public/            # Static assets (images, videos, manifests)
 ```
 
 ## AI Interaction Guidelines

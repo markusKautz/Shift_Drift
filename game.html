@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="Play Shift-Drift: Master the momentum, drift through asteroid fields, and dominate the leaderboard in this modern arcade experience.">
+    <title>Shift-Drift: Arcade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/img/favicon.svg">
+    <style>
+        html,
+        body {
+            background-color: #0a0e1a;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            touch-action: none;
+        }
+
+        /* Rotate Device Overlay */
+        #rotate-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #0a0e1a;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            gap: 20px;
+            padding: 40px;
+        }
+
+        #rotate-overlay .rotate-icon {
+            font-size: 4rem;
+            animation: rotatePhone 2s ease-in-out infinite;
+        }
+
+        #rotate-overlay .rotate-text {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #00d4ff, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #rotate-overlay .rotate-subtext {
+            font-size: 0.7rem;
+            opacity: 0.5;
+            letter-spacing: 2px;
+        }
+
+        .consent-notice {
+            font-size: 0.55rem;
+            opacity: 0.4;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            line-height: 1.4;
+            max-width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: none;
+        }
+
+        @keyframes rotatePhone {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(90deg);
+            }
+
+            50% {
+                transform: rotate(90deg);
+            }
+
+            75% {
+                transform: rotate(0deg);
+            }
+        }
+
+        /* Show overlay only on mobile-sized screens in portrait */
+        @media (orientation: portrait) and (max-width: 1024px) {
+            #rotate-overlay {
+                display: flex !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Rotate Device Overlay -->
+    <div id="rotate-overlay">
+        <div class="rotate-icon">📱</div>
+        <div class="rotate-text">Rotate Your Device</div>
+        <div class="rotate-subtext">This game is best played in landscape mode</div>
+    </div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="ui-overlay">
+            <div id="score-container">SCORE: <span id="score">0</span></div>
+            <div id="level-container">LEVEL: <span id="level">1</span></div>
+            <div id="combo-display" class="hidden">x1</div>
+            <div id="game-over" class="hidden">
+                <h1>GAME OVER</h1>
+                <p>FINAL SCORE: <span id="final-score">0</span></p>
+                <div id="sync-status" class="hidden">SYNCING SCORE...</div>
+                <div id="leaderboard">
+                    <h2>LEADERBOARD</h2>
+                    <ul id="score-list"></ul>
+                </div>
+                <div id="personal-rank-display" class="hidden"></div>
+                <button id="restart-btn">RESTART</button>
+            </div>
+            <div id="notification" class="hidden"></div>
+            <div id="pause-overlay">
+                <div class="pause-content">
+                    <h2 id="pause-title">SHIFT DRIFT</h2>
+                    <div id="start-identity">
+                        <input type="text" id="player-name" placeholder="ABC" maxlength="3" pattern="[A-Z]{3}"
+                            style="text-transform: uppercase;" autocomplete="off">
+                        <p id="pause-message">ENTER INITIALS TO START</p>
+                        <p class="consent-notice">By starting the game, you agree to submit your score to the global
+                            leaderboard.</p>
+                    </div>
+
+                    <div class="pause-controls">
+                        <div class="control-row"><span>ESC</span><span>PAUSE</span></div>
+                        <div class="control-row"><span>↑ / W</span><span>THRUST</span></div>
+                        <div class="control-row"><span>← → / A D</span><span>ROTATE</span></div>
+                        <div class="control-row"><span>SPACE</span><span>SHOOT</span></div>
+                        <div class="control-row"><span>SHIFT</span><span>HYPERSPACE</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="theme-btn" title="Toggle Theme">🎨</div>
+    <div id="pause-btn" title="Pause Game">⏸</div>
+    <script type="module" src="/src/game/main.js"></script>
+</body>
+
+</html>

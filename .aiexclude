@@ -1,0 +1,22 @@
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Package lock (seldom useful for AI reasoning)
+package-lock.json
+
+# Media assets (binary, not meaningful for code understanding)
+img/
+video/
+
+#supabase TEMP-files
+supabase/.temp
+
+#secrets
+.env
+
+#git-Settings
+.gitignore
+.get/

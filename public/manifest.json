@@ -1,0 +1,17 @@
+{
+    "short_name": "ShiftDrift",
+    "name": "Shift Drift - Agentic Coding Showcase",
+    "icons": [
+        {
+            "src": "/img/favicon.svg",
+            "type": "image/svg+xml",
+            "sizes": "any"
+        }
+    ],
+    "start_url": "/index.html",
+    "background_color": "#0a0e1a",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#00d4ff",
+    "description": "A modular refactor of the classic Asteroid arcade experience as agentic coding showcase."
+}

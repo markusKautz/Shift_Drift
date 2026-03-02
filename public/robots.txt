@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shift-drift.pixelorum.at/sitemap.xml

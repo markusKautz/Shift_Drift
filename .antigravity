@@ -1,0 +1,55 @@
+# .antigravity: AI Context Rules for Shift Drift / Asteroid
+
+## Project Overview
+* Name: Shift Drift (internal code name: Asteroid)
+* Type: Technical Showcase / Browser-based arcade refactor
+* Status: Modern refactor of classic Asteroids focusing on AI-driven orchestration
+* Stack: Vite, Vue 3, Supabase, Vercel, Vanilla Canvas 2D, Web Audio API
+* Entry point: index.html -> src/game/main.js
+* Deployment: Vercel (vercel.json)
+
+## Source Layout
+```
+src/
+  game/
+    main.js        # Game loop, input handling, state machine (core logic)
+    Ship.js        # Player ship: movement, combat, shields, theme handling
+    Rival.js       # AI archenemy ship: adaptive behavior, same API as Ship
+    Asteroid.js    # Asteroid entities: fragmentation logic
+    Bullet.js      # Projectile physics
+    Ufo.js         # Secondary enemy entity
+    particles.js   # Visual effect systems
+    audio.js       # Web Audio API implementation
+    ui.js          # HUD, score systems, legal modals
+    constants.js   # Production constants and magic numbers
+    utils.js       # Mathematical utility functions
+  landing/         # Vue-based technical showcase landing page
+  styles/          # Modular CSS architecture
+```
+
+## AI Interaction Guidelines
+* Technical Tone: Maintain a professional, technical, and grounded tone in all communications.
+* Stylistic Constraints: Never use em-dashes (—). Use colons, commas, or parentheses instead. No emojis in technical documentation.
+* No Indents: Maintain a flat structure in documentation (README/etc) as requested by the user.
+* Targeted Edits: Use multi_replace_file_content for non-contiguous changes; replace_file_content for single contiguous blocks.
+* Minimal Reads: Only read files relevant to the current task to conserve context.
+* Dev Server: npm run dev starts the local environment on port 5173.
+* Check constants.js: Verify existing technical parameters before introducing new ones.
+* Austrian Law Compliance: Adhere to DSGVO/GDPR requirements for legal texts (Impressum/Datenschutz).
+
+## Technical Orchestration
+* Core Logic: Managed in main.js via a reactive state object.
+* Theme System: Toggle-based rendering using the isRetro flag.
+* Persistence: Global leaderboards integrated via Supabase.
+* Hosting: Edge-optimized delivery via Vercel.
+
+## Common Task Mapping
+| Task | Primary File(s) |
+|---|---|
+| Physics / Game Constants | constants.js, main.js |
+| Player Mechanics | Ship.js |
+| Rival AI / Mechanics | Rival.js |
+| Audio Synthesis | audio.js |
+| HUD / UI Components | ui.js, src/landing/ |
+| Persistence / Database | src/landing/ (modal handles info) |
+| Build / Deploy | vite.config.js, vercel.json |

@@ -1,0 +1,14 @@
+:root {
+    --bg-color: #050505;
+    --primary-color: #00ff41;
+    --secondary-color: #ff00ff;
+    --text-color: #ffffff;
+    --font-family: 'Press Start 2P', cursive;
+}
+
+body.modern {
+    --primary-color: #00d4ff;
+    --secondary-color: #a855f7;
+    --bg-color: #0a0e1a;
+    --font-family: 'Orbitron', sans-serif;
+}

@@ -1,0 +1,32 @@
+/* Notification System */
+#notification {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 20;
+    color: #facc15;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 15px #facc15;
+    text-align: center;
+    transition: opacity 0.5s ease;
+    animation: notifyPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body.modern #notification {
+    font-size: 24px;
+}
+
+@keyframes notifyPop {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}

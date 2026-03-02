@@ -27,7 +27,8 @@ export function getPlayerScale(baseScale) {
  * UFOs/Rivals become "significantly smaller" on mobile.
  */
 export function getEnemyScale(baseScale) {
-    return Math.pow(baseScale, 0.6);
+    // More aggressive than player scale to emphasize "small, agile" enemies on mobile
+    return Math.pow(baseScale, 0.9);
 }
 
 /**

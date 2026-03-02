@@ -3,6 +3,10 @@ import { getRetroBulletScale } from './scaling.js';
 
 export class Bullet {
     constructor(x, y, angle, isEnemy = false, r = 2, scale = 1) {
+        this.reset(x, y, angle, isEnemy, r, scale);
+    }
+
+    reset(x, y, angle, isEnemy = false, r = 2, scale = 1) {
         this.x = x;
         this.y = y;
         this.xv = (BULLET_SPEED * scale) * Math.cos(angle) / FPS;

@@ -49,8 +49,9 @@ const inputManager = new InputManager({
     onShoot: () => engine.shoot(),
     onHyperspace: () => engine.hyperspace()
 });
-const collisionManager = new CollisionManager(gameState, uiContext);
+const collisionManager = new CollisionManager(gameState, null, uiContext);
 const engine = new GameEngine(gameState, inputManager, collisionManager, uiContext);
+collisionManager.engine = engine;
 
 // Export context functions for UI to use
 function createAsteroids() {

@@ -19,7 +19,7 @@ export class Rival {
         this.shieldActive = true;
     }
 
-    update(canvasWidth, canvasHeight, level, bullets, shipX, shipY) {
+    update(engine, canvasWidth, canvasHeight, level, bullets, shipX, shipY) {
         this.x += this.xv;
         this.y += this.yv;
 
@@ -42,11 +42,11 @@ export class Rival {
         this.shootTimer++;
         if (this.shootTimer > 200) {
             this.shootTimer = 0;
-            this.shoot(bullets, level);
+            this.shoot(engine, bullets, level);
         }
     }
 
-    shoot(bullets, level) {
+    shoot(engine, bullets, level) {
         const shotsPerBurst = Math.min(10, Math.floor(level / 3) + 1);
         const spreadAngle = 0.15;
         const totalSpread = (shotsPerBurst - 1) * spreadAngle;
@@ -54,7 +54,14 @@ export class Rival {
 
         for (let i = 0; i < shotsPerBurst; i++) {
             const angle = startAngle + i * spreadAngle;
-            bullets.push(new Bullet(this.x, this.y, angle, true, 4, this.scale));
+            let b;
+            if (engine.bulletPool.length > 0) {
+                b = engine.bulletPool.pop();
+                b.reset(this.x, this.y, angle, true, 4, this.scale);
+            } else {
+                b = new Bullet(this.x, this.y, angle, true, 4, this.scale);
+            }
+            bullets.push(b);
         }
         audio.playShoot('modern');
     }

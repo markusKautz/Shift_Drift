@@ -6,8 +6,9 @@ import { audio } from './audio.js';
 import { updateComboUI, showNotification } from './ui.js';
 
 export class CollisionManager {
-    constructor(state, engineContext) {
-        this.ctx = engineContext; // Will hold references like canvas, scoreElement, etc.
+    constructor(state, engine, uiContext) {
+        this.ctx = uiContext;
+        this.engine = engine; // Reference to GameEngine for pools
         this.state = state;
     }
 
@@ -60,7 +61,7 @@ export class CollisionManager {
                 }
             }
             audio.playExplosion(currentTheme);
-            createExplosion(this.state.particles, this.state.ship.x, this.state.ship.y, '#facc15', currentTheme);
+            createExplosion(this.engine, this.state.particles, this.state.ship.x, this.state.ship.y, '#facc15', currentTheme);
         } else {
             audio.playExplosion(currentTheme);
             this.ctx.endGame();
@@ -74,7 +75,8 @@ export class CollisionManager {
         for (let i = bullets.length - 1; i >= 0; i--) {
             // Distance Check
             if (bullets[i].dist > BULLET_DIST * canvas.width) {
-                bullets.splice(i, 1);
+                const b = bullets.splice(i, 1)[0];
+                this.engine.bulletPool.push(b);
                 continue;
             }
 
@@ -82,7 +84,10 @@ export class CollisionManager {
             if (bullets[i].isEnemy) {
                 if (distBetweenPoints(bullets[i].x, bullets[i].y, ship.x, ship.y) < ship.r) {
                     this._handleShipHit();
-                    if (!this.state.gameOver) bullets.splice(i, 1); // Remove bullet if shield absorbed it
+                    if (!this.state.gameOver) {
+                        const b = bullets.splice(i, 1)[0];
+                        this.engine.bulletPool.push(b);
+                    }
                     continue;
                 }
             }
@@ -97,7 +102,7 @@ export class CollisionManager {
                         audio.playExplosion(currentTheme);
                         createExplosion(this.state.particles, rival.x, rival.y, '#facc15', currentTheme);
                     } else {
-                        createExplosion(this.state.particles, rival.x, rival.y, 'red', currentTheme);
+                        createExplosion(this.engine, this.state.particles, rival.x, rival.y, 'red', currentTheme);
                         triggerShake(this.state, 15, 8, currentTheme);
                         audio.playExplosion(currentTheme);
                         this._addScore(500);
@@ -117,7 +122,7 @@ export class CollisionManager {
 
                 // Hit UFO
                 else if (ufo && distBetweenPoints(bullets[i].x, bullets[i].y, ufo.x, ufo.y) < ufo.r && !hitSomething) {
-                    createExplosion(this.state.particles, ufo.x, ufo.y, 'red', currentTheme);
+                    createExplosion(this.engine, this.state.particles, ufo.x, ufo.y, 'red', currentTheme);
                     triggerShake(this.state, 15, 8, currentTheme);
                     audio.playExplosion(currentTheme);
                     this._addScore(500);
@@ -130,7 +135,7 @@ export class CollisionManager {
                 if (!hitSomething) {
                     for (let j = asteroids.length - 1; j >= 0; j--) {
                         if (distBetweenPoints(bullets[i].x, bullets[i].y, asteroids[j].x, asteroids[j].y) < asteroids[j].r) {
-                            createExplosion(this.state.particles, asteroids[j].x, asteroids[j].y, '#5eead4', currentTheme);
+                            createExplosion(this.engine, this.state.particles, asteroids[j].x, asteroids[j].y, '#5eead4', currentTheme);
                             triggerShake(this.state, 10, 5, currentTheme);
                             audio.playExplosion(currentTheme);
                             this._splitAsteroid(j);
@@ -140,7 +145,10 @@ export class CollisionManager {
                     }
                 }
 
-                if (hitSomething) bullets.splice(i, 1);
+                if (hitSomething) {
+                    const b = bullets.splice(i, 1)[0];
+                    this.engine.bulletPool.push(b);
+                }
             }
         }
     }

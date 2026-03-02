@@ -18,6 +18,10 @@ export class GameEngine {
         this.stars = [];
         this.lastW = 0;
         this.lastH = 0;
+
+        // Object Pools
+        this.bulletPool = [];
+        this.particlePool = [];
     }
 
     start() {
@@ -68,12 +72,12 @@ export class GameEngine {
             const speed = Math.sqrt(state.ship.thrust.x ** 2 + state.ship.thrust.y ** 2);
             audio.updateThrust(speed, state.currentTheme);
             if (state.currentTheme === 'modern') {
-                state.particles.push(new Particle(
+                this.spawnParticle(
                     state.ship.x - Math.cos(state.ship.a) * state.ship.r,
                     state.ship.y + Math.sin(state.ship.a) * state.ship.r,
                     `rgba(255, ${Math.floor(Math.random() * 100 + 100)}, 0, 1)`,
                     Math.random() * 2 + 1, Math.random() * 10 + 10, Math.random() * 2 + 1
-                ));
+                );
             }
         } else {
             audio.stopThrust();
@@ -87,7 +91,7 @@ export class GameEngine {
             if (state.ufoSpawnTimer <= 0) state.ufo = new Ufo(canvas.width, canvas.height, state.scale);
         }
         if (state.ufo) {
-            state.ufo.update(canvas.width, canvas.height, state.level, state.bullets);
+            state.ufo.update(this, canvas.width, canvas.height, state.level, state.bullets);
         }
 
         if (!state.rival && !state.gameOver && state.level % 3 === 0 && !state.archenemyKilledInLevel) {
@@ -95,7 +99,7 @@ export class GameEngine {
             if (state.rivalSpawnTimer <= 0) state.rival = new Rival(canvas.width, canvas.height, state.scale);
         }
         if (state.rival) {
-            state.rival.update(canvas.width, canvas.height, state.level, state.bullets, state.ship.x, state.ship.y);
+            state.rival.update(this, canvas.width, canvas.height, state.level, state.bullets, state.ship.x, state.ship.y);
         }
 
         // Asteroids & Bullets Movement
@@ -108,7 +112,10 @@ export class GameEngine {
         // Particles & Shake
         for (let i = state.particles.length - 1; i >= 0; i--) {
             state.particles[i].update();
-            if (state.particles[i].life <= 0) state.particles.splice(i, 1);
+            if (state.particles[i].life <= 0) {
+                const p = state.particles.splice(i, 1)[0];
+                this.particlePool.push(p);
+            }
         }
         if (state.shakeTime > 0) state.shakeTime--;
 
@@ -184,17 +191,31 @@ export class GameEngine {
 
             for (let i = 0; i < state.multishotCount; i++) {
                 const angle = startAngle + i * spreadAngle;
-                state.bullets.push(new Bullet(
-                    state.ship.x + 4 / 3 * state.ship.r * Math.cos(state.ship.a),
-                    state.ship.y - 4 / 3 * state.ship.r * Math.sin(state.ship.a),
-                    angle,
-                    false,
-                    2,
-                    state.scale
-                ));
+                const bx = state.ship.x + 4 / 3 * state.ship.r * Math.cos(state.ship.a);
+                const by = state.ship.y - 4 / 3 * state.ship.r * Math.sin(state.ship.a);
+
+                let b;
+                if (this.bulletPool.length > 0) {
+                    b = this.bulletPool.pop();
+                    b.reset(bx, by, angle, false, 2, state.scale);
+                } else {
+                    b = new Bullet(bx, by, angle, false, 2, state.scale);
+                }
+                state.bullets.push(b);
             }
             audio.playShoot(state.currentTheme);
         }
+    }
+
+    spawnParticle(x, y, color, size, life, speed) {
+        let p;
+        if (this.particlePool.length > 0) {
+            p = this.particlePool.pop();
+            p.reset(x, y, color, size, life, speed);
+        } else {
+            p = new Particle(x, y, color, size, life, speed);
+        }
+        this.state.particles.push(p);
     }
 
     hyperspace() {
@@ -213,9 +234,9 @@ export class GameEngine {
         if (state.ship.x < 0 - state.ship.r) state.ship.x = canvas.width + state.ship.r;
         else if (state.ship.x > canvas.width + state.ship.r) state.ship.x = 0 - state.ship.r;
         if (state.ship.y < 0 - state.ship.r) state.ship.y = canvas.height + state.ship.r;
-        else if (state.ship.y > canvas.height + state.ship.r) state.ship.y = 0 - ship.r;
+        else if (state.ship.y > canvas.height + state.ship.r) state.ship.y = 0 - state.ship.r;
 
-        createHyperspaceEffect(state.particles, state.ship.x, state.ship.y, state.currentTheme);
+        createHyperspaceEffect(this, state.particles, state.ship.x, state.ship.y, state.currentTheme);
         audio.playHyperspace();
     }
 }

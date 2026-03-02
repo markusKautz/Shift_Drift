@@ -251,6 +251,7 @@ const introVideo = ref(null);
 const starfield = ref(null);
 const showAllFeatures = ref(false);
 let animationFrameId = null;
+let resizeHandler = null;
 
 const showPhilosophy = ref(false);
 const showModal = ref(false);
@@ -307,7 +308,7 @@ const initStarfield = () => {
       const s = this.size * (width / this.z);
       const opacity = 1 - (this.z / width);
       
-      ctx.fillStyle = `rgba(168, 85, 247, ${opacity * 0.5})`;
+      ctx.fillStyle = `rgba(168, 85, 247, ${opacity * 0.4})`; // Balanced secondary color
       ctx.beginPath();
       ctx.arc(x, y, s, 0, Math.PI * 2);
       ctx.fill();
@@ -333,7 +334,8 @@ const initStarfield = () => {
     animationFrameId = requestAnimationFrame(animate);
   };
 
-  window.addEventListener('resize', resize);
+  resizeHandler = resize;
+  window.addEventListener('resize', resizeHandler);
   resize();
   animate();
 };
@@ -352,7 +354,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (animationFrameId) cancelAnimationFrame(animationFrameId);
-  window.removeEventListener('resize', () => {});
+  if (resizeHandler) window.removeEventListener('resize', resizeHandler);
 });
 </script>
 

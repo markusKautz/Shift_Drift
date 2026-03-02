@@ -17,7 +17,7 @@ export class Ufo {
         this.changeDirTimer = 0;
     }
 
-    update(canvasWidth, canvasHeight, level, bullets) {
+    update(engine, canvasWidth, canvasHeight, level, bullets) {
         this.x += this.xv;
         this.y += this.yv;
 
@@ -37,13 +37,20 @@ export class Ufo {
         const fireInterval = Math.max(40, 100 - (level - 1) * 10);
         if (this.shootTimer > fireInterval) {
             this.shootTimer = 0;
-            this.shoot(bullets);
+            this.shoot(engine, bullets);
         }
     }
 
-    shoot(bullets) {
+    shoot(engine, bullets) {
         const angle = Math.random() * Math.PI * 2;
-        bullets.push(new Bullet(this.x, this.y, angle, true, 4, this.scale));
+        let b;
+        if (engine.bulletPool.length > 0) {
+            b = engine.bulletPool.pop();
+            b.reset(this.x, this.y, angle, true, 4, this.scale);
+        } else {
+            b = new Bullet(this.x, this.y, angle, true, 4, this.scale);
+        }
+        bullets.push(b);
         audio.playShoot('retro'); // UFO bullets are a bit "old school"
     }
 

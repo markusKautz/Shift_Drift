@@ -4,6 +4,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
     plugins: [vue()],
+    publicDir: 'public',
     build: {
         rollupOptions: {
             input: {
@@ -14,5 +15,9 @@ export default defineConfig({
     },
     server: {
         open: true,
+        host: true,
+        watch: {
+            usePolling: true
+        }
     },
 });

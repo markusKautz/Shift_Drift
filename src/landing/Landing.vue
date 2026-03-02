@@ -33,6 +33,45 @@
           </p>
         </div>
 
+        <div class="features-header">
+          <h2>Game Features</h2>
+        </div>
+
+        <div class="features-grid" :class="{ 'collapsed': !showAllFeatures }">
+          <div class="feature-card">
+            <h3>Aesthetic Modes</h3>
+            <p>Switch between classic 'Retro' and glowing 'Modern' themes.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Archenemy</h3>
+            <p>Advanced rival ship with adaptive firing patterns.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Progression</h3>
+            <p>Unlock multishot and shields through tactical gameplay.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Touch Controls</h3>
+            <p>Optimized for mobile and tablet with a tactile HUD.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Global Leaderboard</h3>
+            <p>Compete with players worldwide for the highest score.</p>
+          </div>
+          <div class="feature-card">
+            <h3>Synthesized Audio</h3>
+            <p>Dynamic soundscapes powered by the Web Audio API.</p>
+          </div>
+        </div>
+
+        <button 
+          class="view-more-btn" 
+          @click="showAllFeatures = !showAllFeatures"
+          v-if="!showAllFeatures"
+        >
+          VIEW ALL FEATURES <span class="arrow">▼</span>
+        </button>
+
         <div class="accordion-wrapper" :class="{ 'is-open': showPhilosophy }">
           <button 
             class="accordion-toggle" 
@@ -105,44 +144,17 @@
           </div>
         </div>
 
-        <div class="features-header">
-          <h2>Game Features</h2>
+        <div class="repo-section">
+          <h2>Technical Repository</h2>
+          <p>
+            Explore the complete codebase, implementation plans, and agentic workflows 
+            on GitHub. This project is fully open source as a reference for 
+            modern AI-orchestrated development.
+          </p>
+          <a href="https://github.com/markusKautz/Shift_Drift" target="_blank" class="github-link">
+            VIEW ON GITHUB_
+          </a>
         </div>
-
-        <div class="features-grid" :class="{ 'collapsed': !showAllFeatures }">
-          <div class="feature-card">
-            <h3>Aesthetic Modes</h3>
-            <p>Switch between classic 'Retro' and glowing 'Modern' themes.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Archenemy</h3>
-            <p>Advanced rival ship with adaptive firing patterns.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Progression</h3>
-            <p>Unlock multishot and shields through tactical gameplay.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Touch Controls</h3>
-            <p>Optimized for mobile and tablet with a tactile HUD.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Global Leaderboard</h3>
-            <p>Compete with players worldwide for the highest score.</p>
-          </div>
-          <div class="feature-card">
-            <h3>Synthesized Audio</h3>
-            <p>Dynamic soundscapes powered by the Web Audio API.</p>
-          </div>
-        </div>
-
-        <button 
-          class="view-more-btn" 
-          @click="showAllFeatures = !showAllFeatures"
-          v-if="!showAllFeatures"
-        >
-          VIEW ALL FEATURES <span class="arrow">▼</span>
-        </button>
 
         <div class="action-section">
           <a href="/game.html" class="play-button">LAUNCH GAME</a>
@@ -736,6 +748,51 @@ html, body {
   color: #000;
   box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
   transform: translateY(-2px);
+}
+
+
+.repo-section {
+  background: rgba(0, 212, 255, 0.03);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  margin-bottom: 35px;
+  backdrop-filter: blur(15px);
+  text-align: center;
+}
+
+.repo-section h2 {
+  color: #00d4ff;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+}
+
+.repo-section p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.7;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.github-link {
+  display: inline-block;
+  color: #a855f7;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.github-link:hover {
+  color: #00d4ff;
+  border-bottom-color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
 }
 
 .content-wrapper {

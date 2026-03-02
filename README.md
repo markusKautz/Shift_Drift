@@ -6,11 +6,31 @@ Shift Drift is a modern reimagining of the classic Asteroids arcade game, develo
 ## Agentic Operations
 The development process was characterized by a strict hierarchy of strategic orchestration and autonomous execution.
 
-### Model Orchestration
+### Model Orchestration Matrix
 The project utilized a multi-model strategy to balance velocity with architectural precision.
-* Gemini 3.1 Flash: Leveraged for high-velocity "Vibe Coding" phases, rapid prototyping of UI components, and iterative styling.
-* Gemini 3.1 Pro: Utilized for complex architectural decisions, sensitive logic implementation, and multi-file refactoring tasks.
-* Claude Opus 4.6: Employed for high-level technical oversight and validation of sophisticated game mechanics.
+
+| Role | Models Orchestrated | Technical Contribution |
+| :--- | :--- | :--- |
+| High-Velocity Prototyping | Gemini 3.1 Flash | Rapid UI iteration, boilerplate generation, and iterative CSS styling. |
+| Architectural Logic | Gemini 3.1 Pro | Complex state management, multi-file refactors, and Supabase integration. |
+| Technical Validation | Claude Opus 4.6 | Verification of high-precision physics and structural oversight. |
+
+### Engineering Workflow Architecture
+The development followed a non-linear, agentic loop where the human developer acted as a strategic orchestrator rather than a line-by-line coder.
+
+```mermaid
+graph TD
+    A[Human Orchestrator] ----> |Strategic Intent / Vibe| B(Antigravity Agent)
+    B ----> |Workspace Context Analysis| C{Agent Brain}
+    C ----> |Implementation Plan| D[Human Review / Approval]
+    D ----> |Permission Granted| E[Autonomous Execution]
+    E ----> |Multi-file Refactoring| F[Production Codebase]
+    F ----> |Local Feedback Loop| G[Real-time Verification]
+    G ----> |Walkthrough Generation| H[Human Final Review]
+```
+
+### The Workspace Brain
+The .antigravity and .aiexclude files in the root directory serve as the project's "pre-frontal cortex." They define the technical boundaries, coding standards, and architectural constraints that guide the agent's autonomous decisions. Every major change is documented in the brain directory prior to execution, maintaining a transparent audit trail of AI intent.
 
 ### The Vibe Coding Methodology
 Vibe Coding is a rigorous engineering discipline where the developer acts as an Architect and Orchestrator. The workflow follows a standardized cycle of planning, blueprinting, execution, and verification.

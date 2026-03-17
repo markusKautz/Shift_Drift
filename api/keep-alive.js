@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     try {
         // Perform a simple query to keep the project active
         const { data, error } = await supabase
-            .from('scores') // Assuming 'scores' table exists as per previous conversations
+            .from('leaderboard') // Assuming 'scores' table exists as per previous conversations
             .select('*')
             .limit(1);
 

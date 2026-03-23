@@ -1,0 +1,15 @@
+on:
+  schedule:
+    - cron: '0 9 * * 1,4'  # Every Monday & Thursday at 9am UTC
+  workflow_dispatch:        # Allow manual trigger for testing
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/leaderboard?select=id&limit=1" \
+            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}"

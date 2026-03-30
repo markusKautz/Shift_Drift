@@ -9,9 +9,14 @@ jobs:
     steps:
       - name: Ping Supabase
         run: |
-          curl -s -X POST \
-          "${{ secrets.SUPABASE_URL }}/rest/v1/keep_alive" \
-          -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
-          -H "Content-Type: application/json" \
-          -d '{"pinged_at": "now()"}'
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/keep_alive" \
+            -H "apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"pinged_at": "now()"}')
+          echo "Response: $STATUS"
+          if [ "$STATUS" != "201" ]; then
+            echo "Unexpected status code!"
+            exit 1
+          fi
